@@ -1,0 +1,5 @@
+import(tcltk)
+export(use.simile.at, load.model, list.objects, get.model.property,
+       create.model, set.model.step, create.param.array, set.model.parameter,
+       consult.parameter.metafile, reset.model, execute.model, get.model.time,
+       get.value.list, get.value.array)
