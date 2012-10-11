@@ -30,6 +30,7 @@ proc UseSimileAt {path} {
     set oldWD [pwd]
     cd $SIMILE_PATH/Examples
     package require Ame_dll
+    randseed [clock seconds]
     cd $oldWD
 
     package require Unpacker
@@ -101,6 +102,7 @@ proc c_setparamarray {topNode tgtNode} {
 # right exec thread, so strip it off here
 foreach oldCProc {setparamelement settimepointelement settimepointarray \
 		      cleartimeseries setwraparoundtime setfillmethod \
+		      setinterval \
 		      setrecordlist settimepointrecords markevtparamactive \
 		      setparamall getparamall settimepointall gettimepointall} {
     proc c_$oldCProc {args} {
@@ -108,22 +110,6 @@ foreach oldCProc {setparamelement settimepointelement settimepointarray \
 	return [eval [list new[lindex $cmd 0] $::param_id([lindex $cmd 2])] \
 		    [lrange $cmd 3 end]] ;# elt 1 (2nd) is top node
     }
-}
-
-proc GetCompProperty {topNode prop node} {
-    global cbModelId
-
-    switch -regexp $prop [list \
-	IdFromCapt {
-	    # node is actually caption in this case
-	    if {[catch {getnodeid $cbModelId $node} res]} {
-		set res nomatch
-	    } 
-	} default {
-	    set res [GetCCompProperty $cbModelId $prop $node]
-	}
-			 ]
-    return $res
 }
 
 # here is the scripting command to do it
@@ -136,16 +122,25 @@ proc ConsultParameterMetafile {instanceHandle fileLocn {targetSubmodel {}}} {
 	set ::readMany(/$topNode$component) \
 	    [string equal INPUT [GetModelProperty $mHandle $component Eval]]
     }
-    ZapParams $topNode $targetSubmodel [file normalize $fileLocn]
+    ZapParams $topNode $targetSubmodel [file normalize $fileLocn] 0
 }
 ## End of parameter loading accessories 
 
 proc GetModelProperty {model_id path prop} {
     set node [getnodeid $model_id $path]
-    GetCCompProperty $model_id $prop $node
+    return [GetCCompPropById $model_id $prop $node]
 }
 
-proc GetCCompProperty {model_id prop node} {
+proc GetCompProperty {topNode prop node} {
+# now only needed for v5.x
+    return [GetCCompPropById $::cbModelId $prop $node]
+}
+
+proc GetCCompProperty {topNode prop node} {
+    return [GetCCompPropById $::cbModelId $prop $node]
+}
+
+proc GetCCompPropById {model_id prop node} {
     set numberWangs Caption|MinVal|MaxVal|Trans|Spec|Desc|Comment
     switch -regexp $prop [list \
 	Class|Type|Eval {
@@ -182,8 +177,22 @@ proc GetCCompProperty {model_id prop node} {
 	    set dataWang [lindex {5 6 8 12 13 14 15} \
 			      [lsearch [split $numberWangs |] $prop]]
 	    return [getvalue $model_id $node $dataWang]
+	} IdFromCapt {
+	    # node is actually caption in this case
+	    if {[catch {getnodeid $model_id $node} res]} {
+		set res nomatch
+	    } 
+	    return $res
 	}
 			 ] ;# must be list to substitute last case
+}
+
+proc CreateTimeSeriesStructs {mHandle iHandle} {
+    foreach component [ListObjPaths $mHandle] {
+	if {[string equal INPUT [GetModelProperty $mHandle $component Eval]]} {
+	    CreateParamArray $iHandle $component
+	}
+    }
 }
 
 proc CreateModel {mHandle} {
@@ -193,6 +202,8 @@ proc CreateModel {mHandle} {
     for {set st 1} {$st<8} {incr st} {
 	c_setstepmodel $iHandle 0.1 $st
     }
+    CreateTimeSeriesStructs $mHandle $iHandle
+# create structures for time series parameters
     return $iHandle
 }
 

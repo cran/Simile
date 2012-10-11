@@ -2,25 +2,22 @@
 \alias{get.model.time}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-  Sets the time step used to execute a model.
+Get properties of model components
 }
 \description{
-This function gets the current time for a model instance. This is the
-time to which it was last reset or executed. If an execution
-returns a non-zero value, the current time will be the time at which
-the interruption occurred.
-}
+This function returns the current time in a model instance}
 \usage{
 get.model.time(instance.handle)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{instance.handle}{
-The handle returned by create.model(), identifying an executable model instance.
+%%     ~~Describe \code{path.to.installation} here~~
+    Instance handle created when calling create.model()
 }
 }
 \value{
-  Current time for the model instance, as a real.
+  A floating-point number giving the model time
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -37,7 +34,12 @@ Jasper Taylor
 \donttest{
 % requires Simile installation plus saved executable model so cannot be
 % auto tested
-get.model.time(instance.handle)
-# [1] 100.0
+> get.model.time(instance.handle)
+# [1] 1980.0
+>
 }
 }
+% Add one or more standard keywords, see file 'KEYWORDS' in the
+% R documentation directory.
+\keyword{ ~kwd1 }
+\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
