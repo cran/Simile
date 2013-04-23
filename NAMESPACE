@@ -1,4 +1,10 @@
-export(use.simile.at, load.model, list.objects, get.model.property,
-       create.model, set.model.step, create.param.array, set.model.parameter,
-       consult.parameter.metafile, reset.model, execute.model, get.model.time,
-       get.value.list, get.value.array)
+# Default NAMESPACE created by R
+# Remove the previous line if you edit this file
+
+# Export all names
+exportPattern(".")
+
+# Import all packages listed as Imports or Depends
+import(
+  tcltk
+)

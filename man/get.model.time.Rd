@@ -2,22 +2,21 @@
 \alias{get.model.time}
 %- Also NEED an '\alias' for EACH other topic documented here.
 \title{
-Get properties of model components
+  returns the current time in a model instance in days. 
 }
 \description{
-This function returns the current time in a model instance}
-\usage{
-get.model.time(instance.handle)
+A Simile model instance always has a current time associated with it. This is set when it resets and increases as it runs. This function returns the time in a model instance
 }
+\usage{
+get.model.time(instance.handle)}
 %- maybe also 'usage' for other objects documented here.
 \arguments{
   \item{instance.handle}{
-%%     ~~Describe \code{path.to.installation} here~~
-    Instance handle created when calling create.model()
-}
-}
+    The handle returned by create.model(), identifying an executable model instance.
+  }
+} 
 \value{
-  A floating-point number giving the model time
+  The model time.
 %%  ~Describe the value returned
 %%  If it is a LIST, use
 %%  \item{comp1 }{Description of 'comp1'}
@@ -34,12 +33,6 @@ Jasper Taylor
 \donttest{
 % requires Simile installation plus saved executable model so cannot be
 % auto tested
-> get.model.time(instance.handle)
-# [1] 1980.0
->
+get.model.time(instance.handle)
 }
 }
-% Add one or more standard keywords, see file 'KEYWORDS' in the
-% R documentation directory.
-\keyword{ ~kwd1 }
-\keyword{ ~kwd2 }% __ONLY ONE__ keyword per line
