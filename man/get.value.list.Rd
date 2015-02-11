@@ -46,18 +46,16 @@ Jasper Taylor
   \code{\link{get.value.array}}
 }
 \examples{
-\donttest{
-> get.value.list(iHandle, "/runs/x", "FALSE")
-[[1]]
-[1] 40.76668
-
-[[2]]
-[1] 37.52907
-
-[[3]]
-[1] 33.82021
-
-[[4]]
-[1] 29.69413
-}
+get.value.list("dummy_ih", "/runs/x", "FALSE")
+# [[1]]
+# [1] 40.76668
+# 
+# [[2]]
+# [1] 37.52907
+# 
+# [[3]]
+# [1] 33.82021
+# 
+# [[4]]
+# [1] 29.69413
 }

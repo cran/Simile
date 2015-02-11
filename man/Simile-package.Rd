@@ -13,8 +13,8 @@ models saved by Simile.
 \tabular{ll}{
 Package: \tab Simile\cr
 Type: \tab Package\cr
-Version: \tab 1.2\cr
-Date: \tab 2012-10-11\cr
+Version: \tab 1.3.1\cr
+Date: \tab 2013-06-01\cr
 License: \tab Unrestricted\cr
 LazyLoad: \tab yes\cr
 }
@@ -34,7 +34,7 @@ execution. get.model.time() returns the time at which execution
 finished. Use get.value.array() to get the values from any model
 component as an R array, or get.value.list() to get them as an R list.
 
-This version works with Simile versions 5.94 on.
+This version works with Simile versions 5.97 on.
 }
 \author{
   Simulistics Ltd
@@ -47,18 +47,21 @@ Simile modelling environment: http://simulistics.com
 \keyword{ model }
 \examples{
 %% ~~ simple examples of the most important functions ~~
-\donttest{
-% requires Simile installation plus saved executable model so cannot be
-% auto tested
 require("Simile")
-path.to.installation <- tcl("tk_chooseDirectory", "-title",
-"Folder where Simile is installed:")
-use.simile.at(path.to.installation)
-
 exec.extn <- as.character(tcl("info","sharedlibextension"))
-path.to.spiro <- tcl("tk_getOpenFile",
-                     "-title", "Compiled binary for Spiro example:",
-                     "-initialfile", paste("spiro",exec.extn,sep=""))
+if (interactive()) {
+  path.to.installation <- tcl("tk_chooseDirectory", "-title",
+  		       "Folder where Simile is installed:")
+
+  path.to.spiro <- tcl("tk_getOpenFile",
+		       "-title", "Compiled binary for Spiro example:",		
+                       "-initialfile", paste("spiro",exec.extn,sep=""))
+} else { 
+  path.to.installation <- "dummy/path"
+  path.to.spiro <- "dummy.dll"
+}
+
+use.simile.at(path.to.installation)
 mHandle <- load.model(path.to.spiro)
 objs <- list.objects(mHandle)
 
@@ -116,5 +119,4 @@ print("OK, but that's not how it looks on Simile is it? Try this...")
 xs <- aperm(xs, c(2,1))
 ys <- aperm(ys, c(2,1))
 plot(xs, ys, type="l")
-}
 }
