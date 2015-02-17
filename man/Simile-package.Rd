@@ -90,9 +90,12 @@ plot(xs, ys, type="l")
 
 # now we are going to parameterize it using a state file for the slider helper
 # -- to make this work we load the mime library, which is needed only because
-# the dancer.spf in Simile v5.94 is an older v4.x format file.
+# the dancer.spf in Simile v5.97 is an older v4.x format file. No need to load 
+# if testing, and will always be available if live because required for Simile.
 
-tcl("package","require","mime")
+if (!is.dummy(iHandle)) {
+   tcl("package","require","mime")
+}
 pFile  <- tcl("file", "join", path.to.installation, "Examples", "dancer.spf")
 consult.parameter.metafile(iHandle, pFile)
 

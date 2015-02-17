@@ -1,8 +1,8 @@
-3690a264d3268ee1d06a6e0721162d09 *DESCRIPTION
+8b2d4d1c5df6764892ca3a2d533279cd *DESCRIPTION
 bf4e82d24221a9e30cfc379fe87c9336 *NAMESPACE
 52b2b5d076e5f6e04e16f9a0459e8690 *R/clientmmii.R
-9a94f8fb8a8845a472ec0ae9299deeb5 *exec/client5d.tcl
-1d4b513f1499c2f494b6ce17fdb67bd3 *man/Simile-package.Rd
+ac70488f5f8920567d90f89eddd46e47 *exec/client5d.tcl
+b67e40e8ba5429e8f1c9a476f04ab579 *man/Simile-package.Rd
 67d3c22d120360e601386772b54a03c1 *man/consult.parameter.metafile.Rd
 aa85fdf860a77e127acc351958662138 *man/create.model.Rd
 513ee73c188abb96973f5b898379a532 *man/create.param.array.Rd
